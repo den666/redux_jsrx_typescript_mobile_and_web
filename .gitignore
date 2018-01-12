@@ -9,6 +9,8 @@
 
 /dist
 
+.idea
+
 # misc
 .env.local
 .env.development.local
