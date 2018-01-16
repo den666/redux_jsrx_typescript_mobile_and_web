@@ -12,6 +12,18 @@
     "types": ["node"],
     "moduleResolution": "node"
   },
+  "filesGlob": [
+    "typings/index.d.ts",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "include": ["./src/js/**/*"],
-  "exclude": ["node_modules",".npm","./dist/js"]
+  "exclude": [
+    ".npm",
+    "./dist/js",
+    "android",
+    "ios",
+    "build",
+    "node_modules"
+  ]
 }
