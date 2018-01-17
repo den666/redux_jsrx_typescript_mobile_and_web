@@ -8,14 +8,18 @@
     "removeComments": true,
     "noImplicitAny": true,
     "jsx": "react",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types",
+      "./src/customTypes"
+    ],
     "types": ["node"],
     "moduleResolution": "node"
   },
   "filesGlob": [
     "typings/index.d.ts",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.ts",
+    "src/**/*.d.ts"
   ],
   "include": ["./src/js/**/*"],
   "exclude": [
