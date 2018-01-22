@@ -1,21 +1,10 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import AppContainer from './containers/AppContainer';
 
 export default class MobileApp extends React.Component {
     render() {
         return (
-            <View style={styles.container}>
-                <Text>Chan marica</Text>
-            </View>
+            <AppContainer/>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});

@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Provider} from 'react-redux';
 import WebApp from './WebApp';
 import configureStore from './initialState/configureStore';
-const { PersistGate } = require('redux-persist/lib/integration/react');
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
 const { store, persistor } = configureStore();
 
@@ -10,8 +10,8 @@ const onBeforeLift = () => {
     // take some action before the gate lifts
 };
 
-export default class App extends React.Component {
-    constructor(props:any) {
+export default class App extends React.Component<{}> {
+    constructor(props:{}) {
         super(props);
     }
     render() {

@@ -1,7 +1,14 @@
 import {AnyAction} from 'redux';
+import appState, {appReducerInterface} from '../initialState/appState';
+import {SET_NAME} from '../actions/appActions';
 
-const appReducer = (state:any, action: AnyAction): any => {
+const appReducer = (state:appReducerInterface = appState, action: AnyAction): appReducerInterface => {
     switch (action.type) {
+        case SET_NAME:
+            return {
+                ...state,
+                name: action.payload
+            };
         default:
             return {
                 ...state

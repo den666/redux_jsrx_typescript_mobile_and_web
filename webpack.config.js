@@ -12,117 +12,124 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const path = require('path');
 const isProd = process.env.NODE_ENV === 'production';
+const envVars = process.env;
 
-module.exports = {
-    devtool: isProd ? 'cheap-module-source-map' : 'inline-source-map',
-    entry: {
-        app: './src/index.tsx'
-    },
-    output: {
-        publicPath: '/js',
-        path: path.resolve(__dirname, 'dist/js'),
-        filename: 'app.bundle.js'
-    },
-    resolve: {
-        extensions: [ '.ts', '.tsx', ".js"]
-    },
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            title: 'BASE WEB_MOBILE_APP ',
-            filename: '../index.html',
-            template: 'src/template.html'
-        }),
-        new ExtractTextPlugin({
-            filename:  (getPath) => {
-                return getPath('../css/[name].css').replace('css/js', 'css')},
-            disable: false
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
-            }
-        }),
-        assetsPluginInstance,
-        ...(isProd ? [new MinifyPlugin()] : [])
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.scss/,
-                use: ExtractTextPlugin.extract({
+module.exports = env => {
+
+    console.log('process.env-den', envVars);
+
+    return {
+        devtool: isProd ? 'cheap-module-source-map' : 'inline-source-map',
+        entry: {
+            app: './src/index.tsx'
+        },
+        output: {
+            publicPath: '/js',
+            path: path.resolve(__dirname, 'dist/js'),
+            filename: 'app.bundle.js'
+        },
+        resolve: {
+            extensions: [ '.ts', '.tsx', ".js"]
+        },
+        plugins: [
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+                    TYPE_APP: JSON.stringify(process.env.TYPE_APP || 'mobile')
+                }
+            }),
+            new CleanWebpackPlugin(['dist']),
+            new HtmlWebpackPlugin({
+                title: 'BASE WEB_MOBILE_APP ',
+                filename: '../index.html',
+                template: 'src/template.html'
+            }),
+            new ExtractTextPlugin({
+                filename:  (getPath) => {
+                    return getPath('../css/[name].css').replace('css/js', 'css')},
+                disable: false
+            }),
+            assetsPluginInstance,
+            ...(isProd ? [new MinifyPlugin()] : [])
+        ],
+        module: {
+            rules: [
+                {
+                    test: /\.scss/,
+                    use: ExtractTextPlugin.extract({
+                        use: [
+                            {
+                                loader: "css-loader",
+                                options: {
+                                    minimize: isProd ? true : false,
+                                }
+                            },
+                            {
+                                loader: "sass-loader",
+                                options: {
+                                    includePaths: ["./src/scss"]
+                                }
+                            }]
+                    })
+                },
+                {
+                    test: /\.(png|svg|jpg|gif|ico)$/,
                     use: [
                         {
-                            loader: "css-loader",
+                            loader: 'file-loader?name=../images/[name].[ext]'
+                        }
+                    ]
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/,
+                    use: [
+                        {
+                            loader: 'file-loader?name=../fonts/[name].[ext]'
+                        }
+                    ]
+                },
+                {
+                    test: /\.tsx?$/,
+                    exclude: [
+                        path.resolve(__dirname, "node_modules"),
+                        path.resolve(__dirname, ".expo")
+                    ],
+                    use: [
+                        {
+                            loader: "babel-loader",
                             options: {
-                                minimize: isProd ? true : false,
+                                "presets": "es2015"
                             }
                         },
                         {
-                            loader: "sass-loader",
+                            loader: "ts-loader",
                             options: {
-                                includePaths: ["./src/scss"]
+                                configFile: 'tsconfig.json',
+                                transpileOnly: false //true
                             }
-                        }]
-                })
-            },
-            {
-                test: /\.(png|svg|jpg|gif|ico)$/,
-                use: [
-                    {
-                        loader: 'file-loader?name=../images/[name].[ext]'
-                    }
-                ]
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    {
-                        loader: 'file-loader?name=../fonts/[name].[ext]'
-                    }
-                ]
-            },
-            {
-                test: /\.tsx?$/,
-                exclude: [
-                    path.resolve(__dirname, "node_modules"),
-                    path.resolve(__dirname, ".expo")
-                ],
-                use: [
-                    {
-                        loader: "babel-loader",
-                        options: {
-                            "presets": "es2015"
                         }
-                    },
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            configFile: 'tsconfig.json',
-                            transpileOnly: false //true
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.tsx$/,
-                enforce: 'pre',
-                loader: 'tslint-loader',
-                options: { /* Loader options go here */}
-            },
-            isProd ? {
-                test: /\.tsx$/,
-                loader: WebpackStrip.loader('console.log', 'console.error')
-            } : {},
-        ]
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'dist'),
+                    ]
+                },
+                {
+                    test: /\.tsx$/,
+                    enforce: 'pre',
+                    loader: 'tslint-loader',
+                    options: { /* Loader options go here */}
+                },
+                isProd ? {
+                    test: /\.tsx$/,
+                    loader: WebpackStrip.loader('console.log', 'console.error')
+                } : {},
+            ]
+        },
+        devServer: {
+            contentBase: path.resolve(__dirname, 'dist'),
             publicPath: '/',
             historyApiFallback: {
-            rewrites: [
-                { from: /^\/$/, to: '/index.html' }
-            ]
+                rewrites: [
+                    { from: /^\/$/, to: '/index.html' }
+                ]
+            }
         }
-    }
-};
+    };
+}

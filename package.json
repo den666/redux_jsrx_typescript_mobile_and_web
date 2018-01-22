@@ -49,11 +49,11 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "node node_modules/jest/bin/jest.js --watch",
-    "watch": "webpack --progress --watch",
-    "startApp": "webpack-dev-server --open",
+    "watch": "TYPE_APP=web webpack --progress --watch",
+    "startApp": "TYPE_APP=web webpack-dev-server --open",
     "app": "npm run watch | npm run startApp",
     "testWeb": "react-scripts test --env=jsdom",
-    "build": "NODE_ENV=production webpack"
+    "build": "TYPE_APP=web NODE_ENV=production webpack"
   },
   "jest": {
     "preset": "jest-expo",
