@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {IS_WEB} from '../../constants/environment';
 
 export class AppView extends React.Component {
     render() {

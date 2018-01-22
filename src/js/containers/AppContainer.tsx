@@ -1,21 +1,32 @@
 import {connect, Dispatch} from 'react-redux';
 import {AppInterface} from '../initialState/appInterface';
+import {CHANGE_NAME} from '../actions/appActions';
+import {IS_WEB} from '../constants/environment';
 
 interface stateProps {
+    name: string
 }
 
 interface dispatchProps {
+    changeName: Function
 }
 
 const mapStateToProps = (state:AppInterface): stateProps => {
+    console.log(state);
     return {
+        name: state.appReducer.name
     };
 };
 
 
 const mapDispatchToProps = (dispatch:Dispatch<any>): dispatchProps => {
     return {
-
+        changeName: (text:string) => {
+            dispatch({
+                type: CHANGE_NAME,
+                payload: text
+            });
+        }
     };
 };
 
@@ -27,13 +38,9 @@ const mergeProps = (stateProps: stateProps, dispatchProps: dispatchProps) => {
     };
 };
 
-const isWeb = !!(process && process.env && process.env.TYPE_APP && process.env.TYPE_APP === 'web');
-const {AppView} =   isWeb
+const {AppView} =   IS_WEB
                     ? require('../components/webComponents/AppView')
-                    : require('../components/mobileComponents/AppView');
-
-console.log('isWeb', isWeb);
-console.log('AppView', AppView);
+                    : require('../components/webComponents/AppView');
 
 export default connect<stateProps, dispatchProps, any>(
     mapStateToProps,

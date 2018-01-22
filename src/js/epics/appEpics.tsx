@@ -8,7 +8,9 @@ export const setName = (action$: ActionsObservable<any>) =>
             Observable.concat(
                 Observable.of({
                     type: SET_NAME,
-                    payload: {...action.payload}
+                    payload: action.payload
                 })
             )
         );
+
+

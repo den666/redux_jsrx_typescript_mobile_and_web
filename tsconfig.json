@@ -26,10 +26,12 @@
     "src/**/*.ts",
     "src/**/*.d.ts"
   ],
-  "include": ["./src/**/*"],
+  "include": ["./**/*"],
   "exclude": [
     ".npm",
-    "./dist/js",
+    ".expo",
+    "./dist",
+    "./src/js/components/mobileComponents",
     "android",
     "ios",
     "build",

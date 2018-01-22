@@ -6,14 +6,17 @@ import rootEpic from '../epics/rootEpic';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
+import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import {AppInterface} from './appInterface';
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
+const initialState = !!(JSON.parse(localStorage.getItem('persist:root')));
+
 const config = {
     storage,
     key: 'root',
-    stateReconciler: hardSet,
+    stateReconciler: initialState ? hardSet : autoMergeLevel2
 };
 
 const reducer = persistReducer(config, rootReducer);

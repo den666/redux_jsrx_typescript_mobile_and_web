@@ -5,10 +5,15 @@ export class AppView extends React.Component<AppContainerProps> {
     constructor(props:AppContainerProps) {
         super(props);
     }
+    handlerChange = (e:React.FormEvent<HTMLInputElement>) => {
+        console.log('value', e.currentTarget.value);
+        this.props.changeName(e.currentTarget.value);
+    }
     render() {
-        const {} = this.props;
+        const {name} = this.props;
         return  <div className="width-100">
-                    den
+                    <input type="text" onChange={this.handlerChange} value={name}/>
+                    <div>{name}</div>
                 </div>;
     }
 }
