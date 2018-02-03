@@ -1,2 +1,2 @@
-export const CHANGE_NAME = 'CHANGE_NAME';
-export const SET_NAME = 'SERT_NAME';
+export const DEMO_LOADER = 'DEMO_LOADER';
+export const DEMO_ALERTS = 'DEMO_ALERTS';

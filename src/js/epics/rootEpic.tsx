@@ -1,6 +1,7 @@
 import {combineEpics} from 'redux-observable';
-import {setName} from './appEpics';
+import { addLoader, addAlert } from './appEpics';
 
 export default combineEpics(
-    setName
+    addLoader,
+    addAlert
 );

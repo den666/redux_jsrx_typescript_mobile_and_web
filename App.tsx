@@ -2,7 +2,7 @@ import * as React from 'react';
 import MobileApp from './src/js/MobileApp';
 
 import {Provider} from 'react-redux';
-import configureStore from './src/js/initialState/configureStore';
+import configureStore from './src/js/reducerInterface/configureStore';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 
 const { store, persistor } = configureStore();

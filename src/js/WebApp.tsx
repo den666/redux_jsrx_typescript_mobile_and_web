@@ -1,5 +1,5 @@
 import * as React from 'react';
-import AppContainer from './containers/AppContainer';
+import AppContainer from './containers/viewContainers/AppContainer';
 
 export default class WebApp extends React.Component<{}> {
     constructor(props:{}) {

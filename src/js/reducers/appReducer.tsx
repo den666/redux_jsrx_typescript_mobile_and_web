@@ -1,5 +1,5 @@
 import {AnyAction} from 'redux';
-import appState, {appReducerInterface} from '../initialState/appState';
+import appState, {appReducerInterface} from '../reducerInterface/appInterface';
 import {SET_NAME} from '../actions/appActions';
 
 const appReducer = (state:appReducerInterface = appState, action: AnyAction): appReducerInterface => {

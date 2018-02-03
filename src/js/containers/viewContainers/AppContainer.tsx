@@ -1,31 +1,33 @@
 import { connect, Dispatch } from 'react-redux';
-import { AppInterface } from '../initialState/appInterface';
-import { CHANGE_NAME } from '../actions/appActions';
-import { IS_WEB } from '../constants/environment';
+import { AppInterface } from '../../reducerInterface/appInterface';
+import { DEMO_ALERTS, DEMO_LOADER } from '../../actions/appActions';
+import { IS_WEB } from '../../constants/environment';
 import { withRouter } from 'react-router-dom';
 
 interface stateProps {
-    name: string
 }
 
 interface dispatchProps {
-    changeName: Function
+    showLoader: Function,
+    showAlert: Function
 }
 
 const mapStateToProps = (state:AppInterface): stateProps => {
-    console.log(state);
     return {
-        name: state.appReducer.name
     };
 };
 
 
 const mapDispatchToProps = (dispatch:Dispatch<any>): dispatchProps => {
     return {
-        changeName: (text:string) => {
+        showLoader: () => {
             dispatch({
-                type: CHANGE_NAME,
-                payload: text
+                type: DEMO_LOADER,
+            });
+        },
+        showAlert: () => {
+            dispatch({
+                type: DEMO_ALERTS,
             });
         }
     };
@@ -40,8 +42,8 @@ const mergeProps = (stateProps: stateProps, dispatchProps: dispatchProps) => {
 };
 
 const {AppView} =   IS_WEB
-                    ? require('../components/webComponents/AppView')
-                    : require('../components/mobileComponents/AppView');
+                    ? require('../../components/webComponents/views/AppView')
+                    : require('../../components/mobileComponents/views/AppView');
 
 export default withRouter(connect<stateProps, dispatchProps, any>(
     mapStateToProps,

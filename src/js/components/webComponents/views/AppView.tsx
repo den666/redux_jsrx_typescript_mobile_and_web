@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppContainerProps} from '../../containers/AppContainer';
+import {AppContainerProps} from '../../../containers/viewContainers/AppContainer';
 
 export class AppView extends React.Component<AppContainerProps> {
     constructor(props:AppContainerProps) {
