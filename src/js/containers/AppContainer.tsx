@@ -1,7 +1,8 @@
-import {connect, Dispatch} from 'react-redux';
-import {AppInterface} from '../initialState/appInterface';
-import {CHANGE_NAME} from '../actions/appActions';
-import {IS_WEB} from '../constants/environment';
+import { connect, Dispatch } from 'react-redux';
+import { AppInterface } from '../initialState/appInterface';
+import { CHANGE_NAME } from '../actions/appActions';
+import { IS_WEB } from '../constants/environment';
+import { withRouter } from 'react-router-dom';
 
 interface stateProps {
     name: string
@@ -40,12 +41,12 @@ const mergeProps = (stateProps: stateProps, dispatchProps: dispatchProps) => {
 
 const {AppView} =   IS_WEB
                     ? require('../components/webComponents/AppView')
-                    : require('../components/webComponents/AppView');
+                    : require('../components/mobileComponents/AppView');
 
-export default connect<stateProps, dispatchProps, any>(
+export default withRouter(connect<stateProps, dispatchProps, any>(
     mapStateToProps,
     mapDispatchToProps,
     mergeProps
-)(AppView);
+)(AppView));
 
 export type AppContainerProps = stateProps & dispatchProps;

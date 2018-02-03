@@ -15,9 +15,6 @@ const isProd = process.env.NODE_ENV === 'production';
 const envVars = process.env;
 
 module.exports = env => {
-
-    console.log('process.env-den', envVars);
-
     return {
         devtool: isProd ? 'cheap-module-source-map' : 'inline-source-map',
         entry: {
@@ -32,6 +29,7 @@ module.exports = env => {
             extensions: [ '.ts', '.tsx', ".js"]
         },
         plugins: [
+            new webpack.IgnorePlugin(/react-native/),
             new webpack.DefinePlugin({
                 'process.env': {
                     NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
