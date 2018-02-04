@@ -21,9 +21,6 @@ const alertsReducer = (state:alertsInterface = alertsDefaultState, action: AnyAc
         case ADD_ALERT_ITEM_ARRAY:
             const newStateArray = [...state.alertsList];
             const mergeArray = newStateArray.concat(action.payload);
-
-            console.log('newStateArray', mergeArray, action);
-
             return {
                 ...state,
                 alertsList: mergeArray

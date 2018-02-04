@@ -10,11 +10,11 @@ export const DIMENSIONS = {
 
 export const FONT = {
     DEFAULT_SIZE: 15,
-}
+};
 
 export const DISPLAY = {
     MARGIN: 15,
-}
+};
 
 export const COLORS = {
     WHITE_COLOR: '#ffffff',

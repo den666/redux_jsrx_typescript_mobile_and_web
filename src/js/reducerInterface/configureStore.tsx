@@ -9,8 +9,17 @@ import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { routerMiddleware } from 'react-router-redux';
 import createMemoryHistory from 'history/createMemoryHistory';
+import {IS_WEB} from '../constants/environment';
 
-export const history = createMemoryHistory();
+let createHistory;
+
+if (IS_WEB) {
+    createHistory = require('history/createBrowserHistory').default;
+} else {
+    createHistory = require('history/createMemoryHistory').default;
+}
+
+export const history = createHistory();
 const epicMiddleware = createEpicMiddleware(rootEpic);
 const middleware = routerMiddleware(history);
 
