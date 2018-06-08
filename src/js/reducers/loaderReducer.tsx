@@ -1,23 +1,30 @@
 import {AnyAction} from 'redux';
-import loaderInterface, { loaderState } from '../reducerInterface/loaderInterface';
-import {ADD_LOADER_ITEM, CLEAR_LOADER, REMOVE_LOADER_ITEM} from '../actions/loaderActions';
+import {LOADER_ACTION} from '../constants/actions';
 
-const loaderReducer = (state:loaderInterface = loaderState, action: AnyAction): loaderInterface => {
+export interface loaderReducerInterface {
+    loaderList: string[]
+}
+
+export const loaderState:loaderReducerInterface = {
+    loaderList: []
+};
+
+const loaderReducer = (state:loaderReducerInterface = loaderState, action: AnyAction): loaderReducerInterface => {
     switch (action.type) {
-        case ADD_LOADER_ITEM:
+        case LOADER_ACTION.ADD_LOADER_ITEM:
             const newState = [...state.loaderList];
             newState.push(action.payload);
             return {
                 ...state,
                 loaderList: newState
             };
-        case REMOVE_LOADER_ITEM:
+        case LOADER_ACTION.REMOVE_LOADER_ITEM:
             const newStateWithOutItem = [...state.loaderList].filter(item => item !== action.payload);
             return {
                 ...state,
                 loaderList: newStateWithOutItem
             };
-        case CLEAR_LOADER:
+        case LOADER_ACTION.CLEAR_LOADER:
             return {
                 ...state,
                 loaderList: []

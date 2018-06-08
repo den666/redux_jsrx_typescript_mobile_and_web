@@ -1,6 +1,6 @@
 import { connect, Dispatch } from 'react-redux';
 import { AppInterface } from '../../reducerInterface/appInterface';
-import { DEMO_ALERTS, DEMO_LOADER } from '../../actions/appActions';
+import { DEMO_ACTIONS } from '../../constants/actions';
 import { IS_WEB } from '../../constants/environment';
 import { withRouter } from 'react-router-dom';
 
@@ -22,12 +22,12 @@ const mapDispatchToProps = (dispatch:Dispatch<any>): dispatchProps => {
     return {
         showLoader: () => {
             dispatch({
-                type: DEMO_LOADER,
+                type: DEMO_ACTIONS.DEMO_LOADER,
             });
         },
         showAlert: () => {
             dispatch({
-                type: DEMO_ALERTS,
+                type: DEMO_ACTIONS.DEMO_ALERTS,
             });
         }
     };
@@ -42,8 +42,8 @@ const mergeProps = (stateProps: stateProps, dispatchProps: dispatchProps) => {
 };
 
 const {AppView} =   IS_WEB
-                    ? require('../../components/webComponents/views/AppView')
-                    : require('../../components/mobileComponents/views/AppView');
+    ? require('../../components/webComponents/views/AppView')
+    : require('../../components/mobileComponents/views/AppView');
 
 export default withRouter(connect<stateProps, dispatchProps, any>(
     mapStateToProps,

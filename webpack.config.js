@@ -74,7 +74,7 @@ module.exports = env => {
                     test: /\.(png|svg|jpg|gif|ico)$/,
                     use: [
                         {
-                            loader: 'file-loader?name=../images/[name].[ext]'
+                            loader: 'file-loader?name=./../images/[name].[ext]'
                         }
                     ]
                 },
@@ -82,7 +82,7 @@ module.exports = env => {
                     test: /\.(woff|woff2|eot|ttf|otf)$/,
                     use: [
                         {
-                            loader: 'file-loader?name=../fonts/[name].[ext]'
+                            loader: 'file-loader?name=./../fonts/[name].[ext]'
                         }
                     ]
                 },

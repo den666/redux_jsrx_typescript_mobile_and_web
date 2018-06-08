@@ -1,16 +1,23 @@
 import {AnyAction} from 'redux';
-import alertsInterface, { alertsDefaultState } from '../reducerInterface/alertsInterface';
-import {
-    ADD_ALERT_ITEM,
-    ADD_ALERT_ITEM_ARRAY,
-    REMOVE_ALERT_ITEM_ARRAY,
-    CLEAR_ALERTS,
-    REMOVE_ALERT_ITEM
-} from '../actions/alertsActions';
+import { ALERT_ACTION } from '../constants/actions';
 
-const alertsReducer = (state:alertsInterface = alertsDefaultState, action: AnyAction): alertsInterface => {
+export interface alertsReducerInterface {
+    alertsList: string[]
+}
+
+export const alertsState:alertsReducerInterface = {
+    alertsList: []
+};
+
+const errorMessage = (error: any) => {
+    return error.response.notifications.linkedMessages.length > 0
+        ? error.response.notifications.linkedMessages
+        : error.response.notifications.errorMessages;
+};
+
+const alertsReducer = (state:alertsReducerInterface = alertsState, action: AnyAction): alertsReducerInterface => {
     switch (action.type) {
-        case ADD_ALERT_ITEM:
+        case ALERT_ACTION.ADD_ALERT_ITEM:
             const newState = [...state.alertsList];
             newState.push(action.payload);
             return {
@@ -18,23 +25,25 @@ const alertsReducer = (state:alertsInterface = alertsDefaultState, action: AnyAc
                 alertsList: newState
             };
 
-        case ADD_ALERT_ITEM_ARRAY:
+        case ALERT_ACTION.ADD_ALERT_ITEM_ARRAY:
+
             const newStateArray = [...state.alertsList];
-            const mergeArray = newStateArray.concat(action.payload);
+
+            const mergeArray = newStateArray.concat(errorMessage(action.payload));
             return {
                 ...state,
                 alertsList: mergeArray
             };
-        case REMOVE_ALERT_ITEM:
+        case ALERT_ACTION.REMOVE_ALERT_ITEM:
             const newStateWithOutItem = [...state.alertsList].filter(item => item !== action.payload);
             return {
                 ...state,
                 alertsList: newStateWithOutItem
             };
-        case REMOVE_ALERT_ITEM_ARRAY:
+        case ALERT_ACTION.REMOVE_ALERT_ITEM_ARRAY:
             const newStateWithOutItemArray = [...state.alertsList].filter((item) => {
                 let ifExist = false;
-                action.payload.map((itemList:string) => {
+                errorMessage(action.payload).map((itemList:string) => {
                     if (item === itemList) {
                         ifExist = true;
                     }
@@ -47,7 +56,7 @@ const alertsReducer = (state:alertsInterface = alertsDefaultState, action: AnyAc
                 ...state,
                 alertsList: newStateWithOutItemArray
             };
-        case CLEAR_ALERTS:
+        case ALERT_ACTION.CLEAR_ALERTS:
             return {
                 ...state,
                 alertsList: []
